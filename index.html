@@ -1,185 +1,280 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<title>Semi-Anarchy Scammers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unified Semi-Anarchy Scammer List</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<a class="skip-link" href="#player-search">Skip to search</a>
 
-<h1>JollyCurve_'s Unified Semi-Anarchy Scammer List</h1>
-
-<div class="tabs">
-    <div class="tab-btn active" onclick="switchTab('list')">List</div>
-    <div class="tab-btn" onclick="switchTab('faq')">FAQ</div>
-    <div class="tab-btn" onclick="switchTab('stats')">Stats</div>
-    <div class="tab-btn" onclick="switchTab('archives')">Archives</div>
-
-    <button id="clear-cache-btn" class="clear-btn">
-        Clear Cache & Reload
-    </button>
-</div>
-
-<div id="tab-list" class="tab-content active">
-    <div class="search-container">
-        <input type="text" id="player-search" placeholder="Search names, alts, uuids, or discords..." autocomplete="off">
-        <button id="copy-search-btn" style="display:none;" title="Copy shareable link for this search">Copy search link</button>
-    </div>
-    <div id="player-count" style="text-align:center; color:#555; font-size:0.85em; margin-bottom:6px;"></div>
-    <div id="players"></div>
-    
-    <div id="no-results" style="display: none; text-align: center; padding: 50px 20px; color: #888; font-size: 1.1em; font-style: italic;">No matching players found.</div>
-</div>
-
-<div id="tab-faq" class="tab-content">
-
-    <details class="section">
-        <summary><strong>What is this list? Why did you make it?</strong></summary>
-        <div style="margin-top:10px;">
-            This is a unified list of scammers listed on semi-anarchy servers. Because the original lists are static, and users change their usernames over time, it can be unclear if a user is a scammer or not based on the original lists alone. This list takes the scammers collected in the original lists, and stores them as UUIDs first in order to show who is a scammer right now in an automatic and up to date fashion.
-			<br>
-			Additionally, the goal was to unifiy the various scammer lists, as one goal of marking scammers is to be punitive as well as a safety measure. Avoiding a scammer from another server is often preferred.
-			<br>
-			I made this list to show their current <b>LIVE</b> username, as well as the username history, as the static lists maintained on trading Discords suffer from username changes and deliberate obfuscation by scammers. In short, if you're looking to trade with someone, and the name they have <i>right now</i> doesn't show up in the list or username history, you can feel confident they're not a known scammer.
+<header class="site-header">
+    <div class="masthead">
+        <div class="brand-lockup" aria-label="Unified Semi-Anarchy Scammer List">
+            <span class="brand-mark" aria-hidden="true">US</span>
+            <span class="brand-name">UniScams</span>
         </div>
-    </details>
-
-    <details class="section">
-        <summary><strong>Where are the original scammers lists?</strong></summary>
-        <div style="margin-top:10px;">
-            Each server has it's own separately run trading Discord with it's own unique list of scammers. I manually went through and added the data from those servers to this list, sometimes using chat bridge history and/or the ForestBot database to determine what UUID the scammer has. You can check my work by joining the relevant Discord linked below:
-			<br>
-				<ul>
-					<li><a href="https://Discord.gg/m5fGuqHyeb" target="_blank"><u>Refined Vanilla</u></a></li>
-					<li><a href="https://Discord.gg/g5YJ2f69sZ" target="_blank"><u>Simply Vanilla</u></a></li>
-					<li><a href="https://Discord.gg/XrvxpVv9KU" target="_blank"><u>Uneasy Vanilla</u></a></li>
-					<li><a href="https://Discord.gg/KrkxKmG24" target="_blank"><u>Purity Vanilla</u></a></li>
-					<li><a href="https://Discord.gg/SeawAYDTGy" target="_blank"><u>Anarchy Network</u></a></li>
-				</ul>
-			<br>
-			Once you've joined, you can click the server icon next to a username to be taken directly to the scammer list of that server's trading Discord.
-			<br>
-			Additionally, you can download archives of the scammer lists from the Archives tab on this page. You can easily browse the original lists using that data even if you don't have Discord!
+        <div class="header-actions">
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light theme">Light theme</button>
+            <a class="header-link" href="EXTRASOURCES.md" target="_blank" rel="noopener">Source notes</a>
         </div>
-    </details>
-
-    <details class="section">
-        <summary><strong>How do you know someone actually scammed though?</strong></summary>
-        <div style="margin-top:10px;">
-            This list isn't meant to adjudicate scammer status. The goal is to record scammer's UUIDs, which never change, and present their current username in an easily text searchable way, as well as their username history. If you believe you don't deserve to be marked as a scammer, you'll have to resolve that with the relevant trading Discord mods as well as the person you scammed.
-        </div>
-    </details>
-	
-	<details class="section">
-        <summary><strong>How can you be certain of a scammer's UUID?</strong></summary>
-        <div style="margin-top:10px;">
-            Sites like <a href="https://namemc.com/ " target="_blank"><u>NameMC</u></a> allow you to see a username's history across any UUIDs it's been used with. Naturally, if a username listed on a scammer list only has one entry, you can be confident that UUID is the scammer. Things get more difficult when multiple UUIDs have used the same username. If the list is a decent record, you can use the time the scammer was listed to narrow when the username was in use, and that often is enough to determine the correct UUID. I also leveraged the data in the ForestBot database since UUIDs are recorded for things like deaths and advancements, which could give an objective link between a username and UUID, as well as a timestamp.
-			<br>
-			Unfortunately, several lists were not as granular as the Simply Vanilla list, Purity's in particular was quite annoying. I think there's some history behind that, some controversy about what trading Discord was "official", as well as the chat bridge not being as historical as Simply's. I did my best, but where things were unclear I had no choice but to not list them. Better a scammer goes undetected, for now, than an innocent person be marked in my opinion.
-        </div>
-    </details>
-	
-	<details class="section">
-        <summary><strong>You say you're confident about the UUIDs, and yet you list some as just usernames without UUIDs. Why is that?</strong></summary>
-        <div style="margin-top:10px;">
-            That's true. The Purity scammer list in particular was not helpful when it came to linking the scammer's username with a UUID. Without additional context and multiple UUIDs having used the username during the server's time online, I couldn't narrow it down. The next best thing was to list the known names since that much is concrete.
-        </div>
-    </details>
-	
-	<details class="section">
-        <summary><strong>NameMC allows people to hide username history, how did you find their UUID anyway?</strong></summary>
-        <div style="margin-top:10px;">
-            NameMC isn't the only site with username history. I'd say it's probably the most comprehensive and easiest to use, but being the most popular does lead to users of all stripes trying to hide their username history. Between other username lookup sites, the chat bridges, and the ForestBot database, you usually can't hide from me, unless the original list sucks in the way I described previously.
-        </div>
-    </details>
-	
-	<details class="section">
-        <summary><strong>Why is the username history incomplete for some users?</strong></summary>
-        <div style="margin-top:10px;">
-            The API that pulls username data doesn't have a perfect record of usernames. Mojang cut off access to the official API and not all username sites have the same data. One thing you can count on is their current username being the one displayed though.
-        </div>
-    </details>
-	
-	<details class="section">
-        <summary><strong>Is Discord account information being pulled live like Minecraft UUIDs?</strong></summary>
-        <div style="margin-top:10px;">
-            <b>Yes, by default</b>. The page attempts to resolve Discord User IDs using a live API, and if that fails, it fallsback to a <code>discord.json</code> file that's generated from the <code>data.json</code> file that contains all the data for the page. Even if the user data is out of date, clicking on the link to their profile will always bring up their current account details.
-        </div>
-    </details>
-	
-	<details class="section">
-        <summary><strong>Did you use any other sources beyond the scammer lists?</strong></summary>
-        <div style="margin-top:10px;">
-            <b>Yes</b>. <a href="EXTRASOURCES.md" target="_blank"><u>You can view those here</u></a>. Notably, the alts listed in the "UneasyVanilla Coordinate Leak" were used where applicable, as I've found the data listed there valid. However I would caution against loading the site to avoid potential IP Loggers etc.
-        </div>
-    </details>
-	
-	<details class="section">
-		<summary><strong>Why does the page take so long to load?</strong></summary>
-		<div style="margin-top:10px;">
-			The initial load pulls a lot of data from the API I'm using to resolve usernames and username history. Sometimes the API refuses to send data to you because so much is being requested at once, so the only thing to do is wait until the API is ready to send more. Once downloaded, data is cached for a few hours so you shouldn't have to wait the full load time that often.
-		</div>
-	</details>
-	<details class="section">
-		<summary><strong>Who are you? Why are you interested in these scammers?</strong></summary>
-		<div style="margin-top:10px;">
-			Within the Minecraft Semi-Anarchy space, I go by <a href="https://namemc.com/profile/a46a779e-0ff2-443d-99b7-130c288c784c" target="_blank"><u>JollyCurve_</u></a> in game. <a href="https://discord.com/users/1310388036051144767" target="_blank"><u>You can find me on discord here</u></a>.
-			<br>
-			My irl buddy and I <a href="https://discord.gg/ajBEzpvWPh" target="_blank"><u>run a shop together for fun</u></a> and got most invested in the "run a shop, make ing" game loop starting on Simply Vanilla after we got established and familiar with the quirks of semi-anarchy. I first joined SV in October 2024 and have been fairly fixated on placing blocks ever since. The idea of a unified scammer list has been in my head for quite awhile, and the result of that thought experiment is this page.
-		</div>
-	</details>
-
-</div>
-
-<div id="tab-stats" class="tab-content">
-
-    <div class="player">
-        <h2>List Stats</h2>
-        <div id="statsText"></div>
     </div>
 
-    <div class="player">
-        <h2>Account Stats</h2>
-        <div id="statsBars"></div>
-    </div>
-	
-	<div class="player">
-		<h2>Username Changes*</h2>
-		<p style="margin-top: -10px; font-size: 0.75em; color: #888;">*Assumes all unlinked usernames have 0 username changes</p>
-		<div id="usernameBars"></div>
-	</div>
-	
-	<div class="player">
-		<h2>Alt Stats</h2>
-		<div id="altBars"></div>
-	</div>
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+            <p class="eyebrow">Community-run trade safety lookup</p>
+            <h1 id="hero-title">Check a Minecraft trader before you hand over items.</h1>
+            <p class="hero-lede">
+                A unified, searchable list of scammer entries from semi-anarchy trading Discords. Search current names, past names, UUIDs, known alts, and Discord IDs before making a trade.
+            </p>
+            <div class="hero-actions" aria-label="Primary actions">
+                <a class="primary-action" href="#player-search">Search the list</a>
+                <a class="secondary-action" href="#tab-faq" data-tab-link="faq">Read the methodology</a>
+            </div>
+        </div>
 
-    <div class="player">
-        <h2>Server Distribution</h2>
-        <div id="serverBars"></div>
-    </div>
+        <aside class="lookup-panel" aria-labelledby="lookup-title">
+            <div class="panel-kicker">Fast check</div>
+            <h2 id="lookup-title">Search by any identifier you have.</h2>
+            <div class="search-container">
+                <label class="visually-hidden" for="player-search">Search names, alts, UUIDs, or Discord accounts</label>
+                <input type="search" id="player-search" aria-label="Search names, alts, UUIDs, or Discord accounts" placeholder="Name, UUID, alt, or Discord ID" autocomplete="off">
+                <button id="copy-search-btn" class="link-copy" hidden type="button" title="Copy shareable link for this search">Copy search link</button>
+            </div>
+            <p class="lookup-note">
+                A clean search result only means no match appears in this list. It is not a guarantee that a trade is safe.
+            </p>
+            <div class="server-strip" aria-label="Covered source communities">
+                <img src="unez.png" width="38" height="38" alt="Uneasy Vanilla source badge">
+                <img src="sv.png" width="38" height="38" alt="Simply Vanilla source badge">
+                <img src="axn.png" width="38" height="38" alt="Anarchy Network source badge">
+                <img src="pv.png" width="38" height="38" alt="Purity Vanilla source badge">
+                <img src="rv.png" width="38" height="38" alt="Refined Vanilla source badge">
+            </div>
+        </aside>
+    </section>
 
-</div>
+    <section class="trust-strip" aria-label="List coverage">
+        <div>
+            <span class="metric" id="summary-mains">--</span>
+            <span class="metric-label">listed main accounts</span>
+        </div>
+        <div>
+            <span class="metric" id="summary-alts">--</span>
+            <span class="metric-label">known or manual alts</span>
+        </div>
+        <div>
+            <span class="metric" id="summary-servers">--</span>
+            <span class="metric-label">source servers</span>
+        </div>
+    </section>
+</header>
 
-<div id="tab-archives" class="tab-content">
-    <div class="player">
-        <h2>Scammer List Archives</h2>
-        <p style="color:#888; font-size:0.85em; margin-top:-8px;">
-            Download a ZIP of each server's scammer list data, both easy to read HTML and JSON.
-        </p>
+<main>
+    <nav class="tabs" aria-label="UniScams sections" role="tablist">
+        <button id="tab-btn-list" class="tab-btn active" type="button" role="tab" data-tab="list" aria-controls="tab-list" aria-selected="true">Lookup</button>
+        <button id="tab-btn-faq" class="tab-btn" type="button" role="tab" data-tab="faq" aria-controls="tab-faq" aria-selected="false">Method</button>
+        <button id="tab-btn-stats" class="tab-btn" type="button" role="tab" data-tab="stats" aria-controls="tab-stats" aria-selected="false">Stats</button>
+        <button id="tab-btn-archives" class="tab-btn" type="button" role="tab" data-tab="archives" aria-controls="tab-archives" aria-selected="false">Archives</button>
+        <button id="clear-cache-btn" class="clear-btn" type="button">Clear cached data</button>
+    </nav>
+
+    <section id="tab-list" class="tab-content active" role="tabpanel" aria-labelledby="tab-btn-list" aria-hidden="false">
+        <div class="section-header">
+            <div>
+                <p class="eyebrow">Lookup results</p>
+                <h2>Known scammer entries</h2>
+            </div>
+            <div id="player-count" class="count-line" aria-live="polite"></div>
+        </div>
+        <div id="players" aria-live="polite"></div>
+        <div id="no-results" class="empty-state" hidden>
+            <strong>No matching entry found.</strong>
+            <span>Try a current name, older username, UUID, alt, or Discord ID. Absence from this list is not a safety guarantee.</span>
+        </div>
+    </section>
+
+    <section id="tab-faq" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-faq" aria-hidden="true">
+        <div class="section-header">
+            <div>
+                <p class="eyebrow">Before you trade</p>
+                <h2>How to use this list responsibly</h2>
+            </div>
+        </div>
+
+        <div class="guidance-grid">
+            <article class="guidance-card">
+                <span class="card-label">01</span>
+                <h3>Search every identity</h3>
+                <p>Check the Minecraft name, any older names you know, UUIDs, alts, and Discord accounts. Scammers can change names; UUIDs do not change.</p>
+            </article>
+            <article class="guidance-card">
+                <span class="card-label">02</span>
+                <h3>Open the details</h3>
+                <p>Use username history, alt sections, Discord accounts, and server badges to understand why a person appears here.</p>
+            </article>
+            <article class="guidance-card">
+                <span class="card-label">03</span>
+                <h3>Resolve disputes at the source</h3>
+                <p>This site does not decide whether someone scammed. Handle removals, appeals, and new reports through the relevant trading Discord moderators.</p>
+            </article>
+        </div>
+
+        <div class="split-section">
+            <section class="info-panel" aria-labelledby="warning-signs-title">
+                <h3 id="warning-signs-title">Common warning signs</h3>
+                <ul class="check-list">
+                    <li>They recently changed names or ask you to ignore an older alias.</li>
+                    <li>Their Discord identity does not match the Minecraft account you expected.</li>
+                    <li>They push for an off-channel trade or refuse the server's usual process.</li>
+                    <li>They use an account that appears as an alt or ambiguous entry.</li>
+                </ul>
+            </section>
+
+            <section class="info-panel" aria-labelledby="targeted-title">
+                <h3 id="targeted-title">If a match appears</h3>
+                <ol class="step-list">
+                    <li>Do not continue the trade until you understand the entry.</li>
+                    <li>Open the source server badge when available and review the original context.</li>
+                    <li>Ask the relevant trading Discord moderators how they want reports or appeals handled.</li>
+                    <li>Save names, UUIDs, Discord IDs, screenshots, and timestamps before leaving the conversation.</li>
+                </ol>
+            </section>
+        </div>
+
+        <details class="section">
+            <summary>What is this list?</summary>
+            <div class="detail-copy">
+                This is a unified list of scammers listed on semi-anarchy servers. The original lists are static, while players can change usernames. This page stores confirmed Minecraft UUIDs where possible and resolves current usernames so a trader can search the person in front of them right now.
+            </div>
+        </details>
+
+        <details class="section">
+            <summary>Where are the original scammer lists?</summary>
+            <div class="detail-copy">
+                Each server has its own trading Discord and its own scammer list. Join the relevant Discord to check the source material or report through that community's process.
+                <ul>
+                    <li><a href="https://Discord.gg/m5fGuqHyeb" target="_blank" rel="noopener">Refined Vanilla</a></li>
+                    <li><a href="https://Discord.gg/g5YJ2f69sZ" target="_blank" rel="noopener">Simply Vanilla</a></li>
+                    <li><a href="https://Discord.gg/XrvxpVv9KU" target="_blank" rel="noopener">Uneasy Vanilla</a></li>
+                    <li><a href="https://Discord.gg/KrkxKmG24" target="_blank" rel="noopener">Purity Vanilla</a></li>
+                    <li><a href="https://Discord.gg/SeawAYDTGy" target="_blank" rel="noopener">Anarchy Network</a></li>
+                </ul>
+                The Archives tab also provides downloadable snapshots where archive files are available.
+            </div>
+        </details>
+
+        <details class="section">
+            <summary>How do you know someone actually scammed?</summary>
+            <div class="detail-copy">
+                This list is not meant to adjudicate scammer status. It records entries from existing server scammer lists and presents current usernames, username history, alts, and Discord identifiers in one searchable place. If you believe an entry is wrong, resolve it with the relevant trading Discord moderators.
+            </div>
+        </details>
+
+        <details class="section">
+            <summary>How can a UUID be confirmed?</summary>
+            <div class="detail-copy">
+                Name history tools such as <a href="https://namemc.com/" target="_blank" rel="noopener">NameMC</a>, chat bridge history, and ForestBot data can connect a listed username to a Minecraft UUID. When multiple UUIDs used the same name and the source was not clear enough, this site may leave an entry unlinked instead of attaching the wrong person.
+            </div>
+        </details>
+
+        <details class="section">
+            <summary>Why are some entries usernames without UUIDs?</summary>
+            <div class="detail-copy">
+                Some source lists do not include enough context to connect a name to one specific UUID. Those entries are shown as unlinked or ambiguous so the warning remains visible without pretending the identity is certain.
+            </div>
+        </details>
+
+        <details class="section">
+            <summary>Why can username history be incomplete?</summary>
+            <div class="detail-copy">
+                Mojang no longer exposes the same public username history API, and third-party records differ. Current username resolution is the most important signal, but older names may be missing from some profiles.
+            </div>
+        </details>
+
+        <details class="section">
+            <summary>Is Discord account information live?</summary>
+            <div class="detail-copy">
+                The page attempts to resolve Discord User IDs through a live API. If that fails, it uses the bundled <code>discord.json</code> fallback generated from the page data. Discord profile links still point to the current account for that ID.
+            </div>
+        </details>
+
+        <details class="section">
+            <summary>Why can loading take time?</summary>
+            <div class="detail-copy">
+                The first load fetches live Minecraft and Discord data. Results are cached in your browser for a few hours, so repeat visits should be faster unless you clear cached data.
+            </div>
+        </details>
+
+        <section class="report-panel" aria-labelledby="report-title">
+            <div>
+                <p class="eyebrow">Report or appeal</p>
+                <h3 id="report-title">Use the source community process.</h3>
+                <p>This site aggregates data. New scam reports, disputed entries, and removals should go through the moderators of the trading Discord that owns the original list.</p>
+            </div>
+            <a class="secondary-action" href="#tab-archives" data-tab-link="archives">Open archives</a>
+        </section>
+    </section>
+
+    <section id="tab-stats" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-stats" aria-hidden="true">
+        <div class="section-header">
+            <div>
+                <p class="eyebrow">Data view</p>
+                <h2>List stats</h2>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <section class="player">
+                <h3>List totals</h3>
+                <div id="statsText"></div>
+            </section>
+
+            <section class="player">
+                <h3>Account stats</h3>
+                <div id="statsBars"></div>
+            </section>
+
+            <section class="player">
+                <h3>Username changes</h3>
+                <p class="caption">Assumes unlinked usernames have 0 username changes.</p>
+                <div id="usernameBars"></div>
+            </section>
+
+            <section class="player">
+                <h3>Alt stats</h3>
+                <div id="altBars"></div>
+            </section>
+
+            <section class="player stats-wide">
+                <h3>Server distribution</h3>
+                <div id="serverBars"></div>
+            </section>
+        </div>
+    </section>
+
+    <section id="tab-archives" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-archives" aria-hidden="true">
+        <div class="section-header">
+            <div>
+                <p class="eyebrow">Source snapshots</p>
+                <h2>Scammer list archives</h2>
+                <p class="section-lede">Download server list snapshots as ZIP files with readable HTML and JSON where available.</p>
+            </div>
+        </div>
         <div id="archive-grid" class="archive-grid"></div>
-    </div>
-</div>
+    </section>
+</main>
 
-<div id="loading-screen">
+<div id="loading-screen" role="status" aria-live="polite">
     <div class="loader-box">
-        <div class="spinner"></div>
-        <div id="loading-text">Loading players...</div>
+        <div class="spinner" aria-hidden="true"></div>
+        <div id="loading-text">Loading player data...</div>
     </div>
 </div>
 
-<script src="api.js"></script> 
+<script src="api.js"></script>
 <script src="ui.js"></script>
 <script src="graphs.js"></script>
 <script src="app.js"></script>
@@ -187,35 +282,40 @@
 <script>
 function switchTab(tab) {
     const tabs = {
-        list:     document.getElementById("tab-list"),
-        faq:      document.getElementById("tab-faq"),
-        stats:    document.getElementById("tab-stats"),
+        list: document.getElementById("tab-list"),
+        faq: document.getElementById("tab-faq"),
+        stats: document.getElementById("tab-stats"),
         archives: document.getElementById("tab-archives")
     };
 
     const buttons = document.querySelectorAll(".tab-btn");
 
-    buttons.forEach(b => b.classList.remove("active"));
-    Object.values(tabs).forEach(t => t.classList.remove("active"));
+    buttons.forEach(button => {
+        const isActive = button.dataset.tab === tab;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-selected", String(isActive));
+    });
 
-    if (tab === "list") {
-        tabs.list.classList.add("active");
-        buttons[0].classList.add("active");
-    }
-    if (tab === "faq") {
-        tabs.faq.classList.add("active");
-        buttons[1].classList.add("active");
-    }
-    if (tab === "stats") {
-        tabs.stats.classList.add("active");
-        buttons[2].classList.add("active");
-    }
+    Object.entries(tabs).forEach(([key, panel]) => {
+        const isActive = key === tab;
+        panel.classList.toggle("active", isActive);
+        panel.setAttribute("aria-hidden", String(!isActive));
+    });
+
     if (tab === "archives") {
-        tabs.archives.classList.add("active");
-        buttons[3].classList.add("active");
         renderArchives();
     }
 }
+
+document.querySelectorAll(".tab-btn").forEach(button => {
+    button.addEventListener("click", () => switchTab(button.dataset.tab));
+});
+
+document.querySelectorAll("[data-tab-link]").forEach(link => {
+    link.addEventListener("click", () => {
+        switchTab(link.dataset.tabLink);
+    });
+});
 </script>
 
 </body>

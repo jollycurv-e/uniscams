@@ -7,6 +7,35 @@ window.DEBUG = new URLSearchParams(window.location.search).has('debug');
 window.enableDebug  = () => { window.DEBUG = true; };
 window.disableDebug = () => { window.DEBUG = false; };
 
+const THEME_STORAGE_KEY = "uniscams:theme";
+
+function applyTheme(theme) {
+    const resolvedTheme = theme === "light" ? "light" : "dark";
+    document.documentElement.dataset.theme = resolvedTheme;
+
+    const toggle = document.getElementById("theme-toggle");
+    if (toggle) {
+        const nextTheme = resolvedTheme === "dark" ? "light" : "dark";
+        toggle.textContent = `${nextTheme[0].toUpperCase()}${nextTheme.slice(1)} theme`;
+        toggle.setAttribute("aria-label", `Switch to ${nextTheme} theme`);
+    }
+}
+
+function initThemeToggle() {
+    const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    applyTheme(storedTheme || "dark");
+
+    const toggle = document.getElementById("theme-toggle");
+    if (!toggle) return;
+
+    toggle.addEventListener("click", () => {
+        const currentTheme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+        const nextTheme = currentTheme === "dark" ? "light" : "dark";
+        localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+        applyTheme(nextTheme);
+    });
+}
+
 /* BOOTSTRAP PIPELINE */
 async function loadPlayers() {
     const totalStart = performance.now();
@@ -308,7 +337,9 @@ function setupSearchFilter() {
         history.replaceState(null, "", newUrl);
 
         // Show/hide the copy button based on whether there's an active search
-        if (copyBtn) copyBtn.style.display = query ? "block" : "none";
+        if (copyBtn) {
+            copyBtn.hidden = !query;
+        }
 
         /* ========================================================
            PART A: FILTER STANDARD PLAYER CARDS (MAIN ACCOUNTS)
@@ -472,7 +503,7 @@ function setupSearchFilter() {
            ======================================================== */
         const noResults = document.getElementById("no-results");
         if (noResults) {
-            noResults.style.display = visibleCount === 0 ? "block" : "none";
+            noResults.hidden = visibleCount !== 0;
         }
     });
 
@@ -491,10 +522,14 @@ function setupSearchFilter() {
 
 /* LIFE-CYCLE REFRESH LISTENERS */
 window.addEventListener("DOMContentLoaded", () => {
+    initThemeToggle();
+
     const btn = document.getElementById("clear-cache-btn");
     if (btn) {
         btn.addEventListener("click", () => {
+            const theme = localStorage.getItem(THEME_STORAGE_KEY);
             localStorage.clear();
+            if (theme) localStorage.setItem(THEME_STORAGE_KEY, theme);
             location.reload();
         });
     }

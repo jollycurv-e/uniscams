@@ -14,6 +14,64 @@ function initUI() {
     if (!loadingText) loadingText = document.getElementById("loading-text");
 }
 
+function serverLabelForImage(img) {
+    const registry = window.SERVER_REGISTRY || [];
+    const match = registry.find(server => server.img === img);
+    return match ? match.label : "Source server";
+}
+
+function renderServerBadge(tag, fallbackLabel = "Source server") {
+    if (!tag?.img) return "";
+
+    const label = tag.label || serverLabelForImage(tag.img) || fallbackLabel;
+    const image = `<img src="${tag.img}" class="server-badge" alt="${label} source badge">`;
+
+    if (tag.link) {
+        return `
+            <a
+                href="${tag.link}"
+                target="_blank"
+                rel="noopener"
+                class="server-badge-link"
+                aria-label="Open ${label} source list"
+            >
+                ${image}
+            </a>
+        `;
+    }
+
+    return `<span class="server-badge-static" aria-label="${label} source">${image}</span>`;
+}
+
+function updateSummaryMetrics() {
+    const mainsEl = document.getElementById("summary-mains");
+    const altsEl = document.getElementById("summary-alts");
+    const serversEl = document.getElementById("summary-servers");
+    if (!mainsEl || !altsEl || !serversEl) return;
+
+    const unlinkedCount = (window.unlinked || []).length;
+    let altCount = 0;
+
+    Object.values(altMap || {}).forEach(arr => {
+        if (Array.isArray(arr)) altCount += arr.length;
+    });
+    Object.values(manualAlts || {}).forEach(arr => {
+        if (Array.isArray(arr)) altCount += arr.length;
+    });
+    (window.unlinked || []).forEach(entry => {
+        if (Array.isArray(entry.alts)) altCount += entry.alts.length;
+    });
+
+    const serverCount = new Set([
+        ...Object.values(serverTags || {}).map(t => t.img).filter(Boolean),
+        ...(window.unlinked || []).flatMap(e => (e.tags || []).map(t => t.img).filter(Boolean))
+    ]).size;
+
+    mainsEl.textContent = String((uuids || []).length + unlinkedCount);
+    altsEl.textContent = String(altCount);
+    serversEl.textContent = String(serverCount);
+}
+
 /* UPDATE RETRY BANNER */
 function showRetryBanner() {
     let el = document.getElementById("retry-banner");
@@ -26,18 +84,6 @@ function showRetryBanner() {
     if (!el) {
         el = document.createElement("div");
         el.id = "retry-banner";
-        el.style = `
-            position: fixed;
-            left: 50%;
-            bottom: 20px;
-            transform: translate(-50%, 0);
-            background: rgba(30,30,30,0.95);
-            color: white;
-            padding: 10px 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            z-index: 9999;
-        `;
 
         // Bound to global handler in app.js
         el.onclick = retryFailedPlayers;
@@ -73,23 +119,7 @@ function renderPlayers() {
 
         const serverTag = serverTags[mainUuid];
 
-        let serverBadgeHTML = "";
-
-        if (serverTag?.img) {
-            serverBadgeHTML = `
-                <a
-                    href="${serverTag.link || "#"}"
-                    target="_blank"
-                    class="server-badge-link"
-                >
-                    <img
-                        src="${serverTag.img}"
-                        class="server-badge"
-                        alt="Server Badge"
-                    >
-                </a>
-            `;
-        }
+        const serverBadgeHTML = renderServerBadge(serverTag, "Source server");
 
         /* =========================
            USERNAME HISTORY
@@ -129,10 +159,7 @@ function renderPlayers() {
                             }
 
                             return `
-                                <div
-                                    class="alt-row"
-                                    style="justify-content:space-between;"
-                                >
+                                <div class="alt-row alt-row-between">
                                     <div>${entry.username}</div>
 
                                     ${
@@ -183,9 +210,8 @@ function renderPlayers() {
                                 <div class="alt-row">
                                     <img
                                         src="${altHead}"
-                                        width="24"
-                                        height="24"
-                                        style="border-radius:2px;"
+                                        class="alt-head"
+                                        alt="${altProfile.username} Minecraft head"
                                     >
 
                                     <div>
@@ -263,14 +289,7 @@ function renderPlayers() {
                                                 >
                                             `
                                             : `
-                                                <div
-                                                    class="discord-avatar"
-                                                    style="
-                                                        width:40px;
-                                                        height:40px;
-                                                        background:#1e1f22;
-                                                    "
-                                                ></div>
+                                                <div class="discord-avatar"></div>
                                             `
                                     }
 
@@ -307,12 +326,11 @@ function renderPlayers() {
 
                 <img
                     src="${head}"
-                    width="64"
-                    height="64"
-                    style="border-radius:4px;"
+                    class="player-head"
+                    alt="${main.username} Minecraft head"
                 >
 
-                <div style="flex:1;">
+                <div class="player-title">
                     <div class="username">${main.username}</div>
                     <div class="uuid">${main.uuid}</div>
                 </div>
@@ -336,7 +354,7 @@ function renderPlayers() {
     const countEl = document.getElementById("player-count");
     if (countEl) {
         const total = (uuids || []).length + (window.unlinked || []).length;
-        const failed = (window.failedPlayers || new Set()).size;
+        const failed = failedPlayers.size;
         const serverCount = new Set([
             ...Object.values(serverTags || {}).map(t => t.img).filter(Boolean),
             ...(window.unlinked || []).flatMap(e => (e.tags || []).map(t => t.img).filter(Boolean))
@@ -346,6 +364,8 @@ function renderPlayers() {
             ? `${baseText}  •  ${failed} failed to load`
             : baseText;
     }
+
+    updateSummaryMetrics();
 }
 
 /* ========================================================
@@ -377,27 +397,9 @@ function renderUnlinkedPlayers() {
 
         const tags = entry.tags || [];
 
-        let tagHTML = "";
-
-        if (tags.length) {
-            tagHTML = `
-                <div class="unlinked-badges">
-                    ${tags.map(tag => `
-                        <a
-                            href="${tag.link || "#"}"
-                            target="_blank"
-                            class="server-badge-link"
-                        >
-                            <img
-                                src="${tag.img}"
-                                class="server-badge"
-                                alt="Tag Badge"
-                            >
-                        </a>
-                    `).join("")}
-                </div>
-            `;
-        }
+        const tagHTML = tags.length
+            ? `<div class="unlinked-badges">${tags.map(tag => renderServerBadge(tag, "Source server")).join("")}</div>`
+            : "";
 
         /* =========================
            UNLINKED ALTS
@@ -467,14 +469,7 @@ function renderUnlinkedPlayers() {
                                                 >
                                             `
                                             : `
-                                                <div
-                                                    class="discord-avatar"
-                                                    style="
-                                                        width:40px;
-                                                        height:40px;
-                                                        background:#1e1f22;
-                                                    "
-                                                ></div>
+                                                <div class="discord-avatar"></div>
                                             `
                                     }
 
@@ -536,22 +531,9 @@ function renderUnlinkedPlayers() {
         card.innerHTML = `
             <div class="player-header">
 
-                <div
-                    style="
-                        width:64px;
-                        height:64px;
-                        border-radius:4px;
-                        background:#1b1b1b;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        font-size:28px;
-                    "
-                >
-                    ?
-                </div>
+                <div class="unknown-head">?</div>
 
-                <div style="flex:1; min-width:0;">
+                <div class="player-title">
                     <div class="username">${displayName}</div>
 
                     <div class="uuid">
@@ -613,7 +595,7 @@ function renderArchives() {
                     btn.className = "archive-dl-btn";
                     btn.href = archivePath;
                     btn.download = "";
-                    btn.textContent = "⬇ Download";
+                    btn.textContent = "Download ZIP";
                     card.appendChild(btn);
                 } else {
                     card.classList.add("archive-unavailable");
@@ -637,10 +619,9 @@ function renderFailedPlayers() {
 
     if (!container) return;
 
-    const failed = window.failedPlayers;
-    if (!failed || failed.size === 0) return;
+    if (!failedPlayers || failedPlayers.size === 0) return;
 
-    for (const uuid of failed) {
+    for (const uuid of failedPlayers) {
         // Don't double-render if a card already exists (e.g. after retry)
         if (container.querySelector(`[data-uuid="${uuid}"]`)) continue;
 
@@ -650,22 +631,10 @@ function renderFailedPlayers() {
 
         card.innerHTML = `
             <div class="player-header">
-                <div style="
-                    width:64px;
-                    height:64px;
-                    border-radius:4px;
-                    background:#1b1b1b;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    font-size:28px;
-                    opacity:0.4;
-                ">?</div>
+                <div class="unknown-head">?</div>
 
-                <div style="flex:1; min-width:0; opacity:0.5;">
-                    <div class="username" style="font-size:14px; font-weight:normal; font-style:italic;">
-                        Failed to load
-                    </div>
+                <div class="player-title">
+                    <div class="username">Failed to load</div>
                     <div class="uuid">${uuid}</div>
                 </div>
             </div>

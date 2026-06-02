@@ -1,0 +1,16 @@
+{
+  "answers": {
+    "project_type": "public-safety lookup tool",
+    "audience": "Minecraft semi-anarchy players checking a trade partner before exchanging items or currency",
+    "primary_goal": "Search a player name, UUID, alias, or Discord ID and decide whether to proceed with a trade",
+    "tone": "credible, direct, cautious, community-run",
+    "must_have": "mobile-first, AA accessibility, fast search, transparent source methodology, keyboard-visible focus states",
+    "forbidden": "purple-blue AI gradients, glowing blobs, fake testimonials, fake statistics, fake authorities, generic SaaS hero, fearmongering, vague copy",
+    "reference_brands": "Have I Been Pwned, Consumer Reports, Minecraft Wiki, Discord Safety Center",
+    "stack": "vanilla-html-css-js",
+    "region": "global english-speaking Minecraft communities",
+    "success_metric": "Visitor can find the search field immediately, understand the list's limits, and inspect a matched profile on mobile without horizontal scrolling"
+  },
+  "complete": true,
+  "missing": []
+}

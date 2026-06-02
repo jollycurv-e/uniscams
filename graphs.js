@@ -168,7 +168,7 @@ function renderStats() {
         const y = 240 - h;
 
         // Bar
-        ctxStats.fillStyle = "#9C27B0";
+        ctxStats.fillStyle = "#176b5b";
 
         ctxStats.fillRect(
             x,
@@ -178,8 +178,8 @@ function renderStats() {
         );
 
         // Value text
-        ctxStats.fillStyle = "#FFFFFF";
-        ctxStats.font = "14px Arial";
+        ctxStats.fillStyle = "#1f2520";
+        ctxStats.font = "14px system-ui";
         ctxStats.textAlign = "center";
 
         ctxStats.fillText(
@@ -189,8 +189,8 @@ function renderStats() {
         );
 
         // Label
-        ctxStats.fillStyle = "#CCCCCC";
-        ctxStats.font = "12px Arial";
+        ctxStats.fillStyle = "#6f746b";
+        ctxStats.font = "12px system-ui";
 
         ctxStats.fillText(
             m.label,
@@ -307,7 +307,7 @@ function renderStats() {
                 240 - h;
 
             // Bar
-            ctxUsernames.fillStyle = "#FF9800";
+            ctxUsernames.fillStyle = "#a15c00";
 
             ctxUsernames.fillRect(
                 x,
@@ -317,8 +317,8 @@ function renderStats() {
             );
 
             // Value text
-            ctxUsernames.fillStyle = "#FFFFFF";
-            ctxUsernames.font = "14px Arial";
+            ctxUsernames.fillStyle = "#1f2520";
+            ctxUsernames.font = "14px system-ui";
             ctxUsernames.textAlign = "center";
 
             ctxUsernames.fillText(
@@ -328,8 +328,8 @@ function renderStats() {
             );
 
             // Label text
-            ctxUsernames.fillStyle = "#CCCCCC";
-            ctxUsernames.font = "12px Arial";
+            ctxUsernames.fillStyle = "#6f746b";
+            ctxUsernames.font = "12px system-ui";
 
             ctxUsernames.fillText(
                 m.label,
@@ -454,7 +454,7 @@ function renderStats() {
                 240 - h;
 
             // Bar
-            ctxAlts.fillStyle = "#E91E63";
+            ctxAlts.fillStyle = "#b43d31";
 
             ctxAlts.fillRect(
                 x,
@@ -464,8 +464,8 @@ function renderStats() {
             );
 
             // Value text
-            ctxAlts.fillStyle = "#FFFFFF";
-            ctxAlts.font = "14px Arial";
+            ctxAlts.fillStyle = "#1f2520";
+            ctxAlts.font = "14px system-ui";
             ctxAlts.textAlign = "center";
 
             ctxAlts.fillText(
@@ -475,8 +475,8 @@ function renderStats() {
             );
 
             // Label
-            ctxAlts.fillStyle = "#CCCCCC";
-            ctxAlts.font = "12px Arial";
+            ctxAlts.fillStyle = "#6f746b";
+            ctxAlts.font = "12px system-ui";
 
             ctxAlts.fillText(
                 m.label,
@@ -587,7 +587,7 @@ function renderStats() {
             240 - h;
 
         // Bar
-        ctxServers.fillStyle = "#2196F3";
+        ctxServers.fillStyle = "#176b5b";
 
         ctxServers.fillRect(
             x,
@@ -597,8 +597,8 @@ function renderStats() {
         );
 
         // Value text
-        ctxServers.fillStyle = "#FFFFFF";
-        ctxServers.font = "14px Arial";
+        ctxServers.fillStyle = "#1f2520";
+        ctxServers.font = "14px system-ui";
         ctxServers.textAlign = "center";
 
         ctxServers.fillText(
